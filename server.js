@@ -8,13 +8,12 @@ const app = express();
 // setup database
 const Datastore = require('nedb');
 const db = new Datastore({ filename: 'games', autoload: true });
-db.ensureIndex({fieldName : 'gameId'});
 db.count({}, function (err, count) {
   console.log("There are " + count + " entries in the database");
   if(err) console.log("There's a problem with the database: ", err);
-  else if (count <= 0) {
-    db.insert({gameId: "ILovePancakes"});
-  }
+  // else if (count <= 0) {
+  //   db.insert({moves: "ILovePancakes"});
+  // }
 });
 
 // make all the files in 'public' available
@@ -33,9 +32,14 @@ app.post("/sendMove", function (request, response) {
 
 app.get("/getGame", function (request, response) {
     let id = request.query.id;
-    db.find({gameId : id}, function (err, game) { 
-      response.send(game[0]);
+    db.find({_id : id}, function (err, games) { 
+      response.send(games[0]);
     });
+});
+
+app.get("/createGame", function (request, response) {
+    let player2 = request.query.name;
+  response.sendStatus(200);
 });
 
 app.get("/joinGame", function (request, response) {
