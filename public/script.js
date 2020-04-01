@@ -1,3 +1,3 @@
-fetch("/getGame?id=ILovePancakes").then(res => {
-  console.log(res.body);
+fetch("/getGame").then(async res => {
+  console.log(await res.text());
 });

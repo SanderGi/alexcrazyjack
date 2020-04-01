@@ -34,7 +34,7 @@ app.post("/sendMove", function (request, response) {
 app.get("/getGame", function (request, response) {
     let id = request.query.id;
     db.find({gameId : id}, function (err, game) { 
-      response.send(game);
+      response.send(game[0]);
     });
 });
 
