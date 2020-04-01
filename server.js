@@ -1,31 +1,53 @@
 // server.js
 // where your node app starts
 
-// we've started you off with Express (https://expressjs.com/)
-// but feel free to use whatever libraries or frameworks you'd like through `package.json`.
+// init project
 const express = require("express");
 const app = express();
 
-// our default array of dreams
-const dreams = [
-  "Find and count some sheep",
-  "Climb a really tall mountain",
-  "Wash the dishes"
+// default array of leaderboard entries
+const defaultEntries = [
+  { username: "ManseMus1", score: 300 },
+  { username: "Tapok", score: 200 },
+  { username: "Diktaturet", score: 100 }
 ];
 
+// setup database
+const Datastore = require('nedb');
+const db = new Datastore({ filename: 'games', autoload: true });
+db.count({}, function (err, count) {
+  console.log("There are " + count + " entries in the database");
+  if(err) console.log("There's a problem with the database: ", err);
+  else if(count<=0){ // empty database so needs populating
+    // default entries inserted in the database
+    db.insert(defaultEntries, function (err, scoresAdded) {
+      if(err) console.log("There's a problem with the database: ", err);
+      else if(scoresAdded) console.log("Default entries inserted in the database");
+    });
+  }
+});
+
 // make all the files in 'public' available
-// https://expressjs.com/en/starter/static-files.html
 app.use(express.static("public"));
+// use json
+app.use(express.json({ limit: "10kb" }));
 
 // https://expressjs.com/en/starter/basic-routing.html
 app.get("/", (request, response) => {
-  response.sendFile(__dirname + "/views/index.html");
+    response.sendFile(__dirname + "/public/index.html");
 });
 
-// send the default array of dreams to the webpage
-app.get("/dreams", (request, response) => {
-  // express helps us take JS objects and send them as JSON
-  response.json(dreams);
+app.post("/sendMove", function (request, response) {
+    response.sendStatus(200);
+});
+
+app.get("/getGame", function (request, response) {
+    request.query.gameId
+    response.sendStatus(200);
+});
+
+app.get("/joinGame", function (request, response) {
+    response.sendStatus(200);
 });
 
 // listen for requests :)
