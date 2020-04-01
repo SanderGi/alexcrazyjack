@@ -5,25 +5,15 @@
 const express = require("express");
 const app = express();
 
-// default array of leaderboard entries
-const defaultEntries = [
-  { username: "ManseMus1", score: 300 },
-  { username: "Tapok", score: 200 },
-  { username: "Diktaturet", score: 100 }
-];
-
 // setup database
 const Datastore = require('nedb');
 const db = new Datastore({ filename: 'games', autoload: true });
+db.ensureIndex({fieldName : 'gameId'});
 db.count({}, function (err, count) {
   console.log("There are " + count + " entries in the database");
   if(err) console.log("There's a problem with the database: ", err);
-  else if(count<=0){ // empty database so needs populating
-    // default entries inserted in the database
-    db.insert(defaultEntries, function (err, scoresAdded) {
-      if(err) console.log("There's a problem with the database: ", err);
-      else if(scoresAdded) console.log("Default entries inserted in the database");
-    });
+  else if (count <= 0) {
+    db.insert({gameId: "ILovePancakes"});
   }
 });
 
@@ -42,11 +32,14 @@ app.post("/sendMove", function (request, response) {
 });
 
 app.get("/getGame", function (request, response) {
-    request.query.gameId
-    response.sendStatus(200);
+    let id = request.query.id;
+    db.find({gameId : id}, function (err, game) { 
+      response.send(game);
+    });
 });
 
 app.get("/joinGame", function (request, response) {
+    let id = request.query.id;
     response.sendStatus(200);
 });
 

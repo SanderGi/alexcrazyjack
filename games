@@ -1,3 +1,7 @@
 {"username":"Tapok","score":200,"_id":"1S3fgnuNsatKpDhF"}
 {"username":"Diktaturet","score":100,"_id":"tr2wogGCyLjdW4d2"}
 {"username":"ManseMus1","score":300,"_id":"ywRXpRUBFlNWyHSk"}
+{"$$indexCreated":{"fieldName":"gameId","unique":false,"sparse":false}}
+{"$$indexCreated":{"fieldName":"gameI","unique":false,"sparse":false}}
+{"$$indexCreated":{"fieldName":"game","unique":false,"sparse":false}}
+{"$$indexCreated":{"fieldName":"year","unique":false,"sparse":false}}
