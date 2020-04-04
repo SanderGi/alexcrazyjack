@@ -38,8 +38,8 @@ body{
   white-space: nowrap;
 
   .container {
-    display: inline-block;
-/*     float: center; */
+/*     display: inline-block; */
+    float: center;
   }
 }
 
