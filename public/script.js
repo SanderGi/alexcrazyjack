@@ -4,6 +4,15 @@
 
 let index = 0;
 CreateBoard();
+
+
+
+function MakeMove(rank, suit, index) {
+  let col = index % 10;
+  let row = Math.floor(index / 10);
+  // document.getElementById("name").innerHTML = rank + " " + suit + " " + col + " " + row;
+}
+
 function resizeBoard() {
   let width = (window.innerHeight > window.innerWidth) ? "100%" : "calc(100vh - 14em)";
   document.getElementById("board").style = "width: " + width + "; height: calc(100vh - 14em); margin: auto; " + (width === "100%" ? "border: none" : "border-left: solid; border-right: solid;");
@@ -11,14 +20,8 @@ function resizeBoard() {
   if (window.innerHeight > window.innerWidth) document.getElementById("cardCanvas").className = "playingCards " + (window.innerWidth > 200 ? "faceImages" : "simpleCards");
   else document.getElementById("cardCanvas").className = "playingCards " + (window.windowHeight > 200 ? "faceImages" : "simpleCards");
 }
-resizeBoard()
+resizeBoard();
 window.onresize = function() { resizeBoard(); };
-
-function MakeMove(rank, suit, index) {
-  let col = index % 10;
-  let row = Math.floor(index / 10);
-  document.getElementById("name").innerHTML = rank + " " + suit + " " + col + " " + row;
-}
 
 function CreateBoard() {
   let board = document.getElementById("board");
@@ -111,7 +114,7 @@ function CreateBoard() {
 
 function createCard(rank, suit) {
   let card = document.createElement('div');
-  card.style = "width: 10%; height: calc((100vh - 14em) / 10); overflow: hidden; margin: 0; padding: 0; float: left";
+  card.style = "width: 10%; height: 10%; overflow: hidden; margin: 0; padding: 0; float: left";
   if (suit == "joker") card.innerHTML = '<div class="card joker '+rank+'"><span class="rank"></span><span class="suit">Joker</span></div>';
   else card.innerHTML = '<div class="card rank-' + rank.toString().toLowerCase() + ' ' + suit + '"><span class="rank">'+rank+'</span><span class="suit">&'+suit+';</span></div>';
   card.dataset.index = index;
