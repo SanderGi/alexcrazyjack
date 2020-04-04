@@ -40,7 +40,7 @@
         </div>
         <!--         <div class="playingCards simpleCards"> -->
         <div class="playingCards faceImages">
-          <div id="board" style="width: 100%; height: calc(100vh - 15em);">
+          <div id="board" style="width: 100%; height: calc(100vh - 14em);">
             <div class="card joker big" style="width: 10%; height: 10%; overflow: hidden; margin: 0; padding: 0;">
                 <span class="rank"></span>
                 <span class="suit">Joker</span>
@@ -52,7 +52,7 @@
           </div>
           <script>
             function resizeBoard() {
-              let width = (window.innerHeight > window.innerWidth) ? "100%" : "calc(100vh - 15em)";
+              let width = (window.innerHeight > window.innerWidth) ? "100%" : "calc(100vh - 14em)";
               document.getElementById("board").style = "width: " + width + "; height: calc(100vh - 14em); margin: auto; border-left: dashed; border-right: dashed";
               document.getElementById("name").innerHTML = width;
             }
