@@ -7,7 +7,7 @@ function resizeBoard() {
   let width = (window.innerHeight > window.innerWidth) ? "100%" : "calc(100vh - 14em)";
   document.getElementById("board").style = "width: " + width + "; height: calc(100vh - 14em); margin: auto;" + (width === "100%" ? "border: none" : "border-left: solid; border-right: solid;");
   // document.getElementById("name").innerHTML = width;
-  if (window.innerHeight > window.innerWidth) document.getElementById("cardCanvas").className = "playingCards " + (window.innerWidth > 200 ? "faceImages" : "simpleCards");
+  if (window.innerHeight > window.innerWidth) document.getElementById("cardCanvas").className = "playingCards " + ($(window).width() / parseFloat($("body").css("font-size")) > 20 ? "faceImages" : "simpleCards");
   else document.getElementById("cardCanvas").className = "playingCards " + (window.windowHeight > 200 ? "faceImages" : "simpleCards");
 }
 resizeBoard()
@@ -25,8 +25,8 @@ function CreateBoard() {
   markup += createCardMarkup("K", "clubs", "left");
   for (let i = 6; i >= 4; i--) markup += createCardMarkup(i, "diams", "left");
   for (let i = 4; i <= 6; i++) markup += createCardMarkup(i, "spades", "left");
-  markup += createCardMarkup(10, "hearts", "left");
   markup += createCardMarkup("K", "hearts", "left");
+  markup += createCardMarkup(10, "hearts", "left");
   //
   markup += createCardMarkup(9, "clubs", "left");
   markup += createCardMarkup(6, "clubs", "left");
