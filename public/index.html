@@ -39,16 +39,16 @@
           <h1 id="name" style="position: absolute; top: 0px; width: 100%; text-align: center">GAME NAME</h1>
         </div>
         <!--         <div class="playingCards simpleCards"> -->
-        <div class="playingCards faceImages" style="text-align">
-          <div id="board" style="width: 100%; height: calc(100vh - 14em); border-left: dashed; border-right: dashed">
-            
-          </div>
+        <div class="playingCards faceImages">
+          <div id="board" style="width: 100%; height: calc(100vh - 14em)"></div>
           <script>
-            window.onresize = function() {
+            function resizeBoard() {
               let width = (window.innerHeight > window.innerWidth) ? "100%" : "calc(100vh - 14em)";
-              document.getElementById("board").style = "width: " + width + "; height: calc(100vh - 14em); border-left: dashed; border-right: dashed";
+              document.getElementById("board").style = "width: " + width + "; height: calc(100vh - 14em); margin: auto; border-left: dashed; border-right: dashed";
               document.getElementById("name").innerHTML = width;
             }
+            resizeBoard()
+            window.onresize = function() { resizeBoard() };
           </script>
           <div id="hand" class="scrolling-wrapper" style="border-top: solid">
             <a ontouchstart="" class="card rank-k hearts" style="margin-top: 0.4em;">
