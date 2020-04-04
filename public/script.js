@@ -2,6 +2,7 @@
 //   console.log(await res.json());
 // });
 
+let index = 0;
 CreateBoard();
 function resizeBoard() {
   let width = (window.innerHeight > window.innerWidth) ? "100%" : "calc(100vh - 14em)";
@@ -12,6 +13,10 @@ function resizeBoard() {
 }
 resizeBoard()
 window.onresize = function() { resizeBoard(); };
+
+function MakeMove(rank, suit, col, row) {
+  document.getElementById("name").innerHTML = rank + " " + suit + " " + col + " " + row;
+}
 
 function CreateBoard() {
   let board = document.getElementById("board");
@@ -95,6 +100,10 @@ function createCard(rank, suit) {
   card.style = "width: 10%; height: 10%; overflow: hidden; margin: 0; padding: 0; float: left";
   if (suit == "joker") card.innerHTML = '<div class="card joker '+rank+'"><span class="rank"></span><span class="suit">Joker</span></div>';
   else card.innerHTML = '<div class="card rank-' + rank.toString().toLowerCase() + ' ' + suit + '"><span class="rank">'+rank+'</span><span class="suit">&'+suit+';</span></div>';
+  card.data
+  card.addEventListener('touchstart', (e) => MakeMove(rank, suit, e.target.dataset.index));
+  index++;
+  return card;
   // if (suit == "joker") return '<div style="width: 10%; height: 10%; overflow: hidden; margin: 0; padding: 0; float: left"><div class="card joker '+rank+'"><span class="rank"></span><span class="suit">Joker</span></div></div>';
   // else return '<div style="width: 10%; height: 10%; overflow: hidden; margin: 0; padding: 0; float: left"><div class="card rank-' + rank.toString().toLowerCase() + ' ' + suit + '"><span class="rank">'+rank+'</span><span class="suit">&'+suit+';</span></div></div>';
 }
