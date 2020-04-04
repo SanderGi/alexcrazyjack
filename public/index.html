@@ -36,13 +36,20 @@
       <div id="game" style="display: block; text-align: center;">
         <div style="height: 2.5em; border-bottom: 0.1em solid;">
           <h1 id="leave" style="padding-left: 0.5em; float: left">&lt;</h1>
-          <h1 style="position: absolute; top: 0px; width: 100%; text-align: center">GAME NAME</h1>
+          <h1 id="name" style="position: absolute; top: 0px; width: 100%; text-align: center">GAME NAME</h1>
         </div>
         <!--         <div class="playingCards simpleCards"> -->
-        <div class="playingCards faceImages">
-          <div id="board" style="width: 100%; height: calc(100vh - 14em);">
+        <div class="playingCards faceImages" style="text-align">
+          <div id="board" style="width: 100%; height: calc(100vh - 14em); border-left: dashed; border-right: dashed">
             
           </div>
+          <script>
+            window.onresize = function() {
+              let width = (window.innerHeight > window.innerWidth) ? "100%" : "calc(100vh - 14em)";
+              document.getElementById("board").style = "width: " + width + "; height: calc(100vh - 14em); border-left: dashed; border-right: dashed";
+              document.getElementById("name").innerHTML = width;
+            }
+          </script>
           <div id="hand" class="scrolling-wrapper" style="border-top: solid">
             <a ontouchstart="" class="card rank-k hearts" style="margin-top: 0.4em;">
                 <span class="rank">K</span>
