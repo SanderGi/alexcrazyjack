@@ -34,13 +34,8 @@ body{
 
 .scrolling-wrapper {
   overflow-x: scroll;
-  overflow-y: hidden;
+/*   overflow-y: hidden; */
   white-space: nowrap;
-
-  .container {
-/*     display: inline-block; */
-    float: center;
-  }
 }
 
 .frostedGlass {
