@@ -49,7 +49,35 @@ function CreateBoard() {
   markup += createCardMarkup(7, "clubs", "left");
   markup += createCardMarkup(4, "clubs", "left");
   markup += createCardMarkup(2, "clubs", "left");
+  markup += createCardMarkup("A", "clubs", "left");
+  markup += createCardMarkup("K", "diams", "left");
+  markup += createCardMarkup("K", "spades", "left");
+  markup += createCardMarkup("A", "hearts", "left");
+  markup += createCardMarkup(2, "hearts", "left");
+  markup += createCardMarkup(4, "hearts", "left");
+  markup += createCardMarkup(7, "hearts", "left");
+  //
+  markup += createCardMarkup(7, "hearts", "left");
+  markup += createCardMarkup(4, "hearts", "left");
+  markup += createCardMarkup(2, "hearts", "left");
+  markup += createCardMarkup("A", "hearts", "left");
+  markup += createCardMarkup("K", "spades", "left");
+  markup += createCardMarkup("K", "diams", "left");
+  markup += createCardMarkup("A", "clubs", "left");
   markup += createCardMarkup(2, "clubs", "left");
+  markup += createCardMarkup(4, "clubs", "left");
+  markup += createCardMarkup(7, "clubs", "left");
+  //
+  markup += createCardMarkup(8, "hearts", "left");
+  markup += createCardMarkup(5, "hearts", "left");
+  markup += createCardMarkup(3, "hearts", "left");
+  markup += createCardMarkup("Q", "spades", "left");
+  markup += createCardMarkup("A", "spades", "left");
+  markup += createCardMarkup("A", "diams", "left");
+  markup += createCardMarkup("Q", "diams", "left");
+  markup += createCardMarkup(3, "clubs", "left");
+  markup += createCardMarkup(5, "clubs", "left");
+  markup += createCardMarkup(8, "clubs", "left");
   board.innerHTML = markup;
 }
 
