@@ -10,12 +10,16 @@ CreateBoard();
 function MakeMove(rank, suit, index) {
   let col = index % 10;
   let row = Math.floor(index / 10);
-  // document.getElementById("name").innerHTML = rank + " " + suit + " " + col + " " + row;
+  let chip = document.createElement('img');
+  chip.src = "https://cdn.glitch.com/1326284a-347b-4933-910c-d4ec316eaaa4%2FbluePoker.png?v=1586039897104";
+  chip.style = "width: 10%; position: absolute; top: " + row * 10 + "%; left: " + col * 10 + "%;";
+  document.getElementById("board").appendChild(chip);
+  document.getElementById("name").innerHTML = rank + " " + suit + " " + col + " " + row;
 }
 
 function resizeBoard() {
   let width = (window.innerHeight > window.innerWidth) ? "100%" : "calc(100vh - 14em)";
-  document.getElementById("board").style = "width: " + width + "; height: calc(100vh - 14em); margin: auto; " + (width === "100%" ? "border: none" : "border-left: solid; border-right: solid;");
+  document.getElementById("board").style = "position:relative; width: " + width + "; height: calc(100vh - 14em); margin: auto; " + (width === "100%" ? "border: none" : "border-left: solid; border-right: solid;");
   // document.getElementById("name").innerHTML = width;
   if (window.innerHeight > window.innerWidth) document.getElementById("cardCanvas").className = "playingCards " + (window.innerWidth > 200 ? "faceImages" : "simpleCards");
   else document.getElementById("cardCanvas").className = "playingCards " + (window.windowHeight > 200 ? "faceImages" : "simpleCards");
