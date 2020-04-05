@@ -27,13 +27,10 @@ function enterGame(n) {
   document.getElementById("game").style = "display: block; text-align: center; position: fixed; top: 0px; width: 100%";
 }
 
-function drawChips(moves) {
-  for (let i = 0; i < moves.length)
-}
-
 function getGames() {
-  let stuff = [{id: "ldjhalwidh", moves: ["a0", "a9", "j0", "j9"], player: 1, opponent: "OpponentName", turn: 1, lastUpdated: 1921802129}];
+  let stuff = [{id: "ldjhalwidh", moves: ["-a0", "-a9", "-j0", "-j9"], player: 1, opponent: "OpponentName", turn: 1, lastUpdated: 1921802129}];
   let pturn = document.getElementById("yourTurn");
+  let oturn = document.getElementById("theirTurn");
   for (let i = 0; i < stuff.length; i++) {
     let n = i;
     let element = document.createElement("div");
@@ -41,7 +38,8 @@ function getGames() {
     element.style = "margin: 0.2em; padding: 0.4em; clear: both;"
     element.innerHTML = '<h1 style="font-size: 1.5em">' + stuff[i].opponent + '</h1>';
     element.addEventListener("touchstart", (e) => { enterGame(n); });
-    pturn.appendChild(element);
+    if (stuff[i].turn == stuff[i].player) pturn.appendChild(element);
+    else oturn.appendChild(element);
   }
   return stuff;
 }
@@ -49,9 +47,20 @@ function getGames() {
 function MakeMove(rank, suit, index) {
   let col = index % 10;
   let row = Math.floor(index / 10);
+  placeChip('x' + alpha[row] + col);
+}
+
+function drawChips(moves) {
+  for (let i = 0; i < moves.length; i++) {
+    placeChip(moves[i]);
+  }
+}
+
+function placeChip(move) {
+  var parts = move.split("");
   let chip = document.createElement('img');
-  chip.src = (curGame.player == 1) ? redChip : blueChip;
-  chip.style = "width: 10%; position: absolute; z-index: 100; top: " + row * 10 + "%; left: " + col * 10 + "%;";
+  chip.src = parts[0] == '-' ? blackChip : parts[0] == 'x' ? redChip : blueChip;
+  chip.style = "width: 10%; position: absolute; z-index: 100; top: " + alpha.indexOf(parts[1]) * 10 + "%; left: " + parseInt(parts[2]) * 10 + "%;";
   document.getElementById("chips").appendChild(chip);
 }
 
