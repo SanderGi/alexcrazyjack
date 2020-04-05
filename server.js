@@ -26,7 +26,7 @@ app.get("/", (request, response) => {
     response.sendFile(__dirname + "/public/index.html");
 });
 
-app.post("/sendMove", function (request, response) {
+app.get("/sendMove", function (request, response) {
     response.sendStatus(200);
 });
 
@@ -38,7 +38,8 @@ app.get("/getGame", function (request, response) {
 });
 
 app.get("/createGame", function (request, response) {
-    let player2 = request.query.name;
+  let player2 = request.query.name;
+  db.insert({id: "ldjhalwidh", moves: ["-a0", "-a9", "-j0", "-j9"], player1: null, player2: player2, deck1: [], deck2: [], turn: 1, lastUpdated: 1921802129});
   response.sendStatus(200);
 });
 
