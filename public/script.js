@@ -1,20 +1,26 @@
 // fetch("/getGame?id=8xqxlGnqYR94h6jz").then(async res => {
 //   console.log(await res.json());
 // });
+let games = getGames();
+
+const alpha = "abcdefghij";
+const blueChip = "https://cdn.glitch.com/1326284a-347b-4933-910c-d4ec316eaaa4%2FbluePoker.png?v=1586039897104";
+c
 
 let index = 0;
 CreateBoard();
 
-
+function getGames() {
+  return [{id: "ldjhalwidh", moves: ["a0", "a9", "j0", "j9"], player: 1, opponent: "Tapok"}];
+}
 
 function MakeMove(rank, suit, index) {
   let col = index % 10;
   let row = Math.floor(index / 10);
   let chip = document.createElement('img');
-  chip.src = "https://cdn.glitch.com/1326284a-347b-4933-910c-d4ec316eaaa4%2FbluePoker.png?v=1586039897104";
-  chip.style = "width: 10%; position: absolute; top: " + row * 10 + "%; left: " + col * 10 + "%;";
+  chip.src = blueChip;
+  chip.style = "width: 10%; position: absolute; z-index: 100; top: " + row * 10 + "%; left: " + col * 10 + "%;";
   document.getElementById("chips").appendChild(chip);
-  document.getElementById("name").innerHTML = rank + " " + suit + " " + col + " " + row;
 }
 
 function resizeBoard() {
