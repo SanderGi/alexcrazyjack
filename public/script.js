@@ -28,7 +28,7 @@ function enterGame(n) {
 }
 
 function getGames() {
-  let stuff = [{id: "ldjhalwidh", moves: ["-a0", "-a9", "-j0", "-j9"], player: 1, opponent: "OpponentName", turn: 1, lastUpdated: 1921802129}];
+  let stuff = [{id: "ldjhalwidh", moves: ["-a0", "-a9", "-j0", "-j9"], player: 1, opponent: "OpponentName", hand: ['KS', 'KH', 'KD', 'KC', 'AS'], turn: 1, lastUpdated: 1921802129}];
   let pturn = document.getElementById("yourTurn");
   let oturn = document.getElementById("theirTurn");
   for (let i = 0; i < stuff.length; i++) {
@@ -47,7 +47,16 @@ function getGames() {
 function MakeMove(rank, suit, index) {
   let col = index % 10;
   let row = Math.floor(index / 10);
-  placeChip('x' + alpha[row] + col);
+  let move = (curGame.player == 1 ? 'x' : 'o') + alpha[row] + col;
+  if (curGame.player != curGame.turn || !curGame.hand.includes(move)) return;
+  curGame.hand.splice(curGame.hand.indexOf(move), 1);
+  curGame.hand.push(saveMove(move)); 
+  placeChip(move);
+}
+
+function saveMove(move) {
+  // saves move to server and returns card from deck
+  return "";
 }
 
 function drawChips(moves) {
