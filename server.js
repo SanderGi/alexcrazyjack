@@ -39,14 +39,30 @@ app.get("/getGame", function (request, response) {
 
 app.get("/createGame", function (request, response) {
   let player2 = request.query.name;
-  db.insert({id: "ldjhalwidh", moves: ["-a0", "-a9", "-j0", "-j9"], player1: null, player2: player2, deck1: [], deck2: [], turn: 1, lastUpdated: 1921802129});
-  response.sendStatus(200);
+  let date = new Date();
+  let deck = createDeck(2);
+  deck = shuffle(deck);
+  let id = Date.now()
+  db.insert({id: id, status: "invite send", moves: ["-a0", "-a9", "-j0", "-j9"], player1: null, player2: player2, deck1: [], deck2: [], turn: 1, lastUpdated: id});
+  response.send(id);
 });
 
 app.get("/joinGame", function (request, response) {
     let id = request.query.id;
     response.sendStatus(200);
 });
+
+const ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'];
+const suits = ['H', 'D', 'S', 'C'];
+function createDeck(n) {
+  let deck = [];
+  for (let i = 0; i < suits.length; i++) {
+    for (let j = 0; j < ranks.length; j++) {
+      deck.push(ranks[j] + suits[i]);
+    }
+  }
+  return deck;
+}
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT, () => {
