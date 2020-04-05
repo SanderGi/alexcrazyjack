@@ -1,8 +1,9 @@
 // fetch("/getGame?id=8xqxlGnqYR94h6jz").then(async res => {
 //   console.log(await res.json());
 // });
+let username = "Epic Cow";
 let games = getGames();
-let curGame = null
+let curGame = null;
 
 const alpha = "abcdefghij";
 const blueChip = "https://cdn.glitch.com/1326284a-347b-4933-910c-d4ec316eaaa4%2FbluePoker.png?v=1586039897104";
@@ -13,19 +14,41 @@ let index = 0;
 CreateBoard();
 
 document.getElementById("leave").addEventListener("touchstart", (e) => {
+  document.getElementById("chips").innerHTML = "";
   document.getElementById("game").style = "display: none; text-align: center; position: fixed; top: 0px; width: 100%";
   document.getElementById("menu").style = "display: block";
 });
 
+function enterGame(n) {
+  curGame = games[n];
+  document.getElementById("menu").style = "display: none";
+  drawChips(curGame.moves);
+  document.getElementById("name").innerHTML = username + " v. " + curGame.opponent;
+  document.getElementById("game").style = "display: block; text-align: center; position: fixed; top: 0px; width: 100%";
+}
+
+function drawChips(moves) {
+  
+}
+
 function getGames() {
-  return [{id: "ldjhalwidh", moves: ["a0", "a9", "j0", "j9"], player: 1, opponent: "OpponentName", lastUpdated: 1921802129}];
+  let stuff = [{id: "ldjhalwidh", moves: ["a0", "a9", "j0", "j9"], player: 1, opponent: "OpponentName", turn: 1, lastUpdated: 1921802129}];
+  let pturn = document.getElementById("yourTurn");
+  for (let i = 0; i < stuff.length; i++) {
+    let n = i;
+    let element = document.createElement("div");
+    element.className = "frostedGlass";
+    element.style = "margin: 0.2em; padding: 0.4em; clear: both;"
+    element.mark
+  }
+  return stuff;
 }
 
 function MakeMove(rank, suit, index) {
   let col = index % 10;
   let row = Math.floor(index / 10);
   let chip = document.createElement('img');
-  chip.src = blueChip;
+  chip.src = (curGame.player == 1) ? redChip : blueChip;
   chip.style = "width: 10%; position: absolute; z-index: 100; top: " + row * 10 + "%; left: " + col * 10 + "%;";
   document.getElementById("chips").appendChild(chip);
 }
