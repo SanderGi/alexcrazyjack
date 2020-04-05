@@ -73,10 +73,9 @@ function ShowHand(hand) {
 }
 
 async function saveMove(move) {
-  // fetch("/getGame?id=8xqxlGnqYR94h6jz").then(async res => {
-//   console.log(await res.json());
-// });
-  return "";
+  fetch("/makeMoveAndGetCard?id="+curGame.id+"&move="+move).then(async res => {
+    return await res.json();
+  });
 }
 
 function drawChips(moves) {
