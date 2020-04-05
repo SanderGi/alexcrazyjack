@@ -1,7 +1,7 @@
 // fetch("/getGame?id=8xqxlGnqYR94h6jz").then(async res => {
 //   console.log(await res.json());
 // });
-let username = "Epic Cow";
+let username = "Eh PigCow";
 let games = getGames();
 let curGame = null;
 
@@ -23,12 +23,12 @@ function enterGame(n) {
   curGame = games[n];
   document.getElementById("menu").style = "display: none";
   drawChips(curGame.moves);
-  document.getElementById("name").innerHTML = username + " v. " + curGame.opponent;
+  document.getElementById("name").innerHTML = username + " <strong>vs. " + curGame.opponent;
   document.getElementById("game").style = "display: block; text-align: center; position: fixed; top: 0px; width: 100%";
 }
 
 function drawChips(moves) {
-  
+  for (let i = 0; i < moves.length)
 }
 
 function getGames() {
@@ -39,7 +39,9 @@ function getGames() {
     let element = document.createElement("div");
     element.className = "frostedGlass";
     element.style = "margin: 0.2em; padding: 0.4em; clear: both;"
-    element.mark
+    element.innerHTML = '<h1 style="font-size: 1.5em">' + stuff[i].opponent + '</h1>';
+    element.addEventListener("touchstart", (e) => { enterGame(n); });
+    pturn.appendChild(element);
   }
   return stuff;
 }
