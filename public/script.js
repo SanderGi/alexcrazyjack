@@ -2,16 +2,23 @@
 //   console.log(await res.json());
 // });
 let games = getGames();
+let curGame = null
 
 const alpha = "abcdefghij";
 const blueChip = "https://cdn.glitch.com/1326284a-347b-4933-910c-d4ec316eaaa4%2FbluePoker.png?v=1586039897104";
-c
+const redChip = "https://cdn.glitch.com/1326284a-347b-4933-910c-d4ec316eaaa4%2FredPoker.png?v=1586039897300";
+const blackChip = "https://cdn.glitch.com/1326284a-347b-4933-910c-d4ec316eaaa4%2FbackPoker.png?v=1586039897127";
 
 let index = 0;
 CreateBoard();
 
+document.getElementById("leave").addEventListener("touchstart", (e) => {
+  document.getElementById("game").style = "display: none; text-align: center; position: fixed; top: 0px; width: 100%";
+  document.getElementById("menu").style = "display: block";
+});
+
 function getGames() {
-  return [{id: "ldjhalwidh", moves: ["a0", "a9", "j0", "j9"], player: 1, opponent: "Tapok"}];
+  return [{id: "ldjhalwidh", moves: ["a0", "a9", "j0", "j9"], player: 1, opponent: "OpponentName", lastUpdated: 1921802129}];
 }
 
 function MakeMove(rank, suit, index) {
