@@ -46,18 +46,19 @@ app.get("/createGame", function (request, response) {
   let date = new Date();
   let deck = createDeck(2);
   shuffle(deck);
-  let id = Date.now()
+  let id = date.now()
   db.insert({id: id, status: "invite send", moves: ["-a0", "-a9", "-j0", "-j9"], player1: null, player2: player2, deck1: deck.splice(0,51), deck2: deck, turn: 1, lastUpdated: id});
   response.send(id);
 });
 
 app.get("/joinGame", function (request, response) {
     let id = request.query.id;
+    let player1 = request.query.name;
     db.find({id: id}, function (err, games) { 
       if (games[0].status !== "invite send") response.send("GAME IS NOT JOINABLE");
       else {
         db.update(games[0], 
-            {id: id, status: "playing", moves: ["-a0", "-a9", "-j0", "-j9"], player1: null, player2: player2, deck1: deck.splice(0,51), deck2: deck, turn: 1, lastUpdated: id}, {}
+            {id: id, status: "playing", moves: ["-a0", "-a9", "-j0", "-j9"], player1: player1, player2: games[0].player2, deck1: games[0].deck1, deck2: games[0].deck2, turn: 1, lastUpdated: date.now}, {}
         );
         response.send(games[0]);
       }
