@@ -25,6 +25,7 @@ function enterGame(n) {
   drawChips(curGame.moves);
   document.getElementById("name").innerHTML = username + " <strong>vs. " + curGame.opponent;
   document.getElementById("game").style = "display: block; text-align: center; position: fixed; top: 0px; width: 100%";
+  ShowHand();
 }
 
 function getGames() {
@@ -47,11 +48,24 @@ function getGames() {
 function MakeMove(rank, suit, index) {
   let col = index % 10;
   let row = Math.floor(index / 10);
+  let card = rank.toString() + suit.charAt(0);
+  card = card.toUpperCase();
+  if (curGame.player != curGame.turn || !curGame.hand.includes(card)) return;
+  curGame.hand.splice(curGame.hand.indexOf(card), 1);
+  curGame.hand.push(saveMove(card)); 
   let move = (curGame.player == 1 ? 'x' : 'o') + alpha[row] + col;
-  if (curGame.player != curGame.turn || !curGame.hand.includes(move)) return;
-  curGame.hand.splice(curGame.hand.indexOf(move), 1);
-  curGame.hand.push(saveMove(move)); 
   placeChip(move);
+  ShowHand(curGame.hand);
+}
+
+function ShowHand(hand) {
+  let markup = '';
+  for (let i = 0; i < hand.length; hand++) {
+    let parts = hand[i].split("");
+    let suit = parts[1] == 'S' ? 'spades' : parts[1] == 'H' ? 'hearts' : parts[1] == 'D' ? 'diams' : 'clubs';
+    markup += '<a class="card rank-'+parts[0].toLowerCase()+' '+suit+'" style="margin-top: 0.4em;"><span class="rank">'+parts[0]+'</span><span class="suit">&'+suit+';</span></a>';
+  }
+  document.getElementById("hand").innerHTML = markup;
 }
 
 function saveMove(move) {
