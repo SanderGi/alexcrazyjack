@@ -1,7 +1,7 @@
 // fetch("/getGame?id=8xqxlGnqYR94h6jz").then(async res => {
 //   console.log(await res.json());
 // });
-let username = "Eh PigCow";
+let username = "Harry Potter";
 let games = getGames();
 let curGame = null;
 
@@ -25,11 +25,11 @@ function enterGame(n) {
   drawChips(curGame.moves);
   document.getElementById("name").innerHTML = username + " <strong>vs. " + curGame.opponent;
   document.getElementById("game").style = "display: block; text-align: center; position: fixed; top: 0px; width: 100%";
-  ShowHand();
+  ShowHand(curGame.hand);
 }
 
 function getGames() {
-  let stuff = [{id: "ldjhalwidh", moves: ["-a0", "-a9", "-j0", "-j9"], player: 1, opponent: "OpponentName", hand: ['KS', 'KH', 'KD', 'KC', 'AS'], turn: 1, lastUpdated: 1921802129}];
+  let stuff = [{id: "ldjhalwidh", moves: ["-a0", "-a9", "-j0", "-j9"], player: 1, opponent: "TestGame", hand: ['KS', 'KH', 'KD', 'KC', 'AS'], turn: 1, lastUpdated: 1921802129}];
   let pturn = document.getElementById("yourTurn");
   let oturn = document.getElementById("theirTurn");
   for (let i = 0; i < stuff.length; i++) {
@@ -51,25 +51,31 @@ function MakeMove(rank, suit, index) {
   let card = rank.toString() + suit.charAt(0);
   card = card.toUpperCase();
   if (curGame.player != curGame.turn || !curGame.hand.includes(card)) return;
+  curGame.turn = "nope";
   curGame.hand.splice(curGame.hand.indexOf(card), 1);
-  curGame.hand.push(saveMove(card)); 
   let move = (curGame.player == 1 ? 'x' : 'o') + alpha[row] + col;
   placeChip(move);
-  ShowHand(curGame.hand);
+  saveMove(move).then((newCard) => {
+    curGame.hand.push(newCard);
+    ShowHand(curGame.hand);
+  });
 }
 
 function ShowHand(hand) {
   let markup = '';
-  for (let i = 0; i < hand.length; hand++) {
+  for (let i = 0; i < hand.length; i++) {
     let parts = hand[i].split("");
+    if (parts.length < 2) continue;
     let suit = parts[1] == 'S' ? 'spades' : parts[1] == 'H' ? 'hearts' : parts[1] == 'D' ? 'diams' : 'clubs';
     markup += '<a class="card rank-'+parts[0].toLowerCase()+' '+suit+'" style="margin-top: 0.4em;"><span class="rank">'+parts[0]+'</span><span class="suit">&'+suit+';</span></a>';
   }
   document.getElementById("hand").innerHTML = markup;
 }
 
-function saveMove(move) {
-  // saves move to server and returns card from deck
+async function saveMove(move) {
+  // fetch("/getGame?id=8xqxlGnqYR94h6jz").then(async res => {
+//   console.log(await res.json());
+// });
   return "";
 }
 
