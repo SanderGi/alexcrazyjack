@@ -6,16 +6,17 @@ let games = getGames();
 let curGame = null;
 
 const alpha = "abcdefghij";
-const blueChip = "https://cdn.glitch.com/1326284a-347b-4933-910c-d4ec316eaaa4%2FbluePoker.png?v=1586039897104";
-const redChip = "https://cdn.glitch.com/1326284a-347b-4933-910c-d4ec316eaaa4%2FredPoker.png?v=1586039897300";
-const blackChip = "https://cdn.glitch.com/1326284a-347b-4933-910c-d4ec316eaaa4%2FbackPoker.png?v=1586039897127";
+const blueChip = "/assets/blueChip.png";
+const redChip = "/assets/redChip.png";
+const blackChip = "/assets/blackChip.png";
 
 let index = 0;
 CreateBoard();
 
-document.getElementById("leave").addEventListener("touchstart", (e) => {
+document.getElementById("leave").addEventListener("click", (e) => {
   document.getElementById("chips").innerHTML = "";
-  document.getElementById("game").style = "display: none; text-align: center; position: fixed; top: 0px; width: 100%";
+  document.getElementById("game").style =
+    "display: none; text-align: center; position: fixed; top: 0px; width: 100%";
   document.getElementById("menu").style = "display: block";
 });
 
@@ -23,22 +24,37 @@ function enterGame(n) {
   curGame = games[n];
   document.getElementById("menu").style = "display: none";
   drawChips(curGame.moves);
-  document.getElementById("name").innerHTML = username + " <strong>vs. " + curGame.opponent;
-  document.getElementById("game").style = "display: block; text-align: center; position: fixed; top: 0px; width: 100%";
+  document.getElementById("name").innerHTML =
+    username + " <strong>vs. " + curGame.opponent;
+  document.getElementById("game").style =
+    "display: block; text-align: center; position: fixed; top: 0px; width: 100%";
   ShowHand(curGame.hand);
 }
 
 function getGames() {
-  let stuff = [{id: "ldjhalwidh", moves: ["-a0", "-a9", "-j0", "-j9"], player: 1, opponent: "TestGame", hand: ['KS', 'KH', 'KD', 'KC', 'AS'], turn: 1, lastUpdated: 1921802129}];
+  let stuff = [
+    {
+      id: "ldjhalwidh",
+      moves: ["-a0", "-a9", "-j0", "-j9"],
+      player: 1,
+      opponent: "TestGame",
+      hand: ["KS", "KH", "KD", "KC", "AS"],
+      turn: 1,
+      lastUpdated: 1921802129,
+    },
+  ];
   let pturn = document.getElementById("yourTurn");
   let oturn = document.getElementById("theirTurn");
   for (let i = 0; i < stuff.length; i++) {
     let n = i;
     let element = document.createElement("div");
     element.className = "frostedGlass";
-    element.style = "margin: 0.2em; padding: 0.4em; clear: both;"
-    element.innerHTML = '<h1 style="font-size: 1.5em">' + stuff[i].opponent + '</h1>';
-    element.addEventListener("touchstart", (e) => { enterGame(n); });
+    element.style = "margin: 0.2em; padding: 0.4em; clear: both;";
+    element.innerHTML =
+      '<h1 style="font-size: 1.5em">' + stuff[i].opponent + "</h1>";
+    element.addEventListener("click", (e) => {
+      enterGame(n);
+    });
     if (stuff[i].turn == stuff[i].player) pturn.appendChild(element);
     else oturn.appendChild(element);
   }
@@ -53,7 +69,7 @@ function MakeMove(rank, suit, index) {
   if (curGame.player != curGame.turn || !curGame.hand.includes(card)) return;
   curGame.turn = "nope";
   curGame.hand.splice(curGame.hand.indexOf(card), 1);
-  let move = (curGame.player == 1 ? 'x' : 'o') + alpha[row] + col;
+  let move = (curGame.player == 1 ? "x" : "o") + alpha[row] + col;
   placeChip(move);
   saveMove(move).then((newCard) => {
     curGame.hand.push(newCard);
@@ -62,20 +78,38 @@ function MakeMove(rank, suit, index) {
 }
 
 function ShowHand(hand) {
-  let markup = '';
+  let markup = "";
   for (let i = 0; i < hand.length; i++) {
     let parts = hand[i].split("");
     if (parts.length < 2) continue;
-    let suit = parts[1] == 'S' ? 'spades' : parts[1] == 'H' ? 'hearts' : parts[1] == 'D' ? 'diams' : 'clubs';
-    markup += '<a class="card rank-'+parts[0].toLowerCase()+' '+suit+'" style="margin-top: 0.4em;"><span class="rank">'+parts[0]+'</span><span class="suit">&'+suit+';</span></a>';
+    let suit =
+      parts[1] == "S"
+        ? "spades"
+        : parts[1] == "H"
+        ? "hearts"
+        : parts[1] == "D"
+        ? "diams"
+        : "clubs";
+    markup +=
+      '<a class="card rank-' +
+      parts[0].toLowerCase() +
+      " " +
+      suit +
+      '" style="margin-top: 0.4em;"><span class="rank">' +
+      parts[0] +
+      '</span><span class="suit">&' +
+      suit +
+      ";</span></a>";
   }
   document.getElementById("hand").innerHTML = markup;
 }
 
 async function saveMove(move) {
-  fetch("/makeMoveAndGetCard?id="+curGame.id+"&move="+move).then(async res => {
-    return await res.json();
-  });
+  fetch("/makeMoveAndGetCard?id=" + curGame.id + "&move=" + move).then(
+    async (res) => {
+      return await res.json();
+    }
+  );
 }
 
 function drawChips(moves) {
@@ -86,21 +120,41 @@ function drawChips(moves) {
 
 function placeChip(move) {
   var parts = move.split("");
-  let chip = document.createElement('img');
-  chip.src = parts[0] == '-' ? blackChip : parts[0] == 'x' ? redChip : blueChip;
-  chip.style = "width: 10%; position: absolute; z-index: 100; top: " + alpha.indexOf(parts[1]) * 10 + "%; left: " + parseInt(parts[2]) * 10 + "%;";
+  let chip = document.createElement("img");
+  chip.src = parts[0] == "-" ? blackChip : parts[0] == "x" ? redChip : blueChip;
+  chip.style =
+    "width: 10%; position: absolute; z-index: 100; top: " +
+    alpha.indexOf(parts[1]) * 10 +
+    "%; left: " +
+    parseInt(parts[2]) * 10 +
+    "%;";
   document.getElementById("chips").appendChild(chip);
 }
 
 function resizeBoard() {
-  let width = (window.innerHeight > window.innerWidth) ? "100%" : "calc(100vh - 14em)";
-  document.getElementById("board").style = "position:relative; width: " + width + "; height: calc(100vh - 14em); margin: auto; " + (width === "100%" ? "border: none" : "border-left: solid; border-right: solid;");
+  let width =
+    window.innerHeight > window.innerWidth ? "100%" : "calc(100vh - 14em)";
+  document.getElementById("board").style =
+    "position:relative; width: " +
+    width +
+    "; height: calc(100vh - 14em); margin: auto; " +
+    (width === "100%"
+      ? "border: none"
+      : "border-left: solid; border-right: solid;");
   // document.getElementById("name").innerHTML = width;
-  if (window.innerHeight > window.innerWidth) document.getElementById("cardCanvas").className = "playingCards " + (window.innerWidth > 200 ? "faceImages" : "simpleCards");
-  else document.getElementById("cardCanvas").className = "playingCards " + (window.windowHeight > 200 ? "faceImages" : "simpleCards");
+  if (window.innerHeight > window.innerWidth)
+    document.getElementById("cardCanvas").className =
+      "playingCards " +
+      (window.innerWidth > 200 ? "faceImages" : "simpleCards");
+  else
+    document.getElementById("cardCanvas").className =
+      "playingCards " +
+      (window.windowHeight > 200 ? "faceImages" : "simpleCards");
 }
 resizeBoard();
-window.onresize = function() { resizeBoard(); };
+window.onresize = function () {
+  resizeBoard();
+};
 
 function CreateBoard() {
   let board = document.getElementById("board");
@@ -192,12 +246,29 @@ function CreateBoard() {
 }
 
 function createCard(rank, suit) {
-  let card = document.createElement('div');
-  card.style = "width: 10%; height: 10%; overflow: hidden; margin: 0; padding: 0; float: left";
-  if (suit == "joker") card.innerHTML = '<div class="card joker '+rank+'"><span class="rank"></span><span class="suit">Joker</span></div>';
-  else card.innerHTML = '<div class="card rank-' + rank.toString().toLowerCase() + ' ' + suit + '"><span class="rank">'+rank+'</span><span class="suit">&'+suit+';</span></div>';
+  let card = document.createElement("div");
+  card.style =
+    "width: 10%; height: 10%; overflow: hidden; margin: 0; padding: 0; float: left";
+  if (suit == "joker")
+    card.innerHTML =
+      '<div class="card joker ' +
+      rank +
+      '"><span class="rank"></span><span class="suit">Joker</span></div>';
+  else
+    card.innerHTML =
+      '<div class="card rank-' +
+      rank.toString().toLowerCase() +
+      " " +
+      suit +
+      '"><span class="rank">' +
+      rank +
+      '</span><span class="suit">&' +
+      suit +
+      ";</span></div>";
   card.dataset.index = index;
-  card.addEventListener('touchstart', (e) => { MakeMove(rank, suit, card.dataset.index); });
+  card.addEventListener("click", (e) => {
+    MakeMove(rank, suit, card.dataset.index);
+  });
   index++;
   return card;
   // if (suit == "joker") return '<div style="width: 10%; height: 10%; overflow: hidden; margin: 0; padding: 0; float: left"><div class="card joker '+rank+'"><span class="rank"></span><span class="suit">Joker</span></div></div>';
